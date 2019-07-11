@@ -1,0 +1,35 @@
+{% extends 'user/base.html' %}
+{% block user %}
+	<a href="{% url 'home' %}" style='color:black;'>{{ username }}</a>
+{% endblock user %}
+{% block content %}
+    <div class="card">
+    	<div class="card-header">
+    		<h3>Create Project</h3>
+    	</div>
+    	<div class="card-body">
+    		<form action="{% url 'creatingproject' %}" method='post'>
+		        {% csrf_token %}
+		        <div class="form-group">
+		        	<label for="title">Title:</label>
+		        	<input type="text" class="form-control" id="title" placeholder="New project" name="title">
+		        </div>
+		        <div class="form-group">
+		        	<label for="description">Description:</label>
+		        	<input type="text" class="form-control" id="description" name="description">
+		        </div>
+
+		      <!--   <p>title: </p>
+		        <input type='text' value='New project' name='title'/> -->
+		        <!-- <p>description: </p>
+		        <input type='text' name='description'/> -->
+		        <!-- <input type='submit' value='Create' /> -->
+		        <button type="submit" class="btn btn-primary">Create</button>
+		    </form>
+    	</div>
+    </div>
+    
+
+
+{% endblock content %}
+   

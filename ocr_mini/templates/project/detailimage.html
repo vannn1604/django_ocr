@@ -1,0 +1,32 @@
+{% extends 'user/base.html' %}
+{% block user %}
+	<a href="{% url 'home' %}" style='color:black;'>{{ username }}</a>
+{% endblock user %}
+<{% block content %}
+	
+
+
+	<div class="card">
+		<div class="card-header">
+			<div>
+				<h3>
+					<a href="{% url 'detailproject' project.id %}">{{ project.title }} </a>/
+					<a href="{% url 'image' project.id %}">List Image </a>/
+					{{ title }}
+				</h3>
+			</div>
+		</div>
+		<div class="card-body">
+			<ul>
+				<li>Title: {{ title }}<a href="{% url 'editimage' project.id image_id %}" class="btn btn-outline-secondary" style="float: right;">Edit Title</a></li>
+				<li>Auto_OCR: <span class="text-primary">{{ auto_OCR }}</span></li>
+				<li>Created at: {{ created_at }}</li>
+				<li>Updated at: {{ updated_at }}</li>
+				<li class="list-group-item" style="margin-top: 15px;">
+					<img src="{{ source.url }}" height="100px" />
+				</li>
+			</ul>
+		</div>
+	</div>
+
+{% endblock content %}

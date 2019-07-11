@@ -1,0 +1,23 @@
+{% extends 'user/base.html' %}
+{% block user %}
+    <a href="{% url 'home' %}" style='color:black;'>{{ username }}</a>
+{% endblock user %}
+<{% block content %}
+
+    <div class="card">
+    	<div class="card-header">
+    		<h4 style="display: inline;">List projects</h4>
+    		<a href="{% url 'createproject' %}" class="btn btn-primary" style="float: right;">New Project</a>
+    	</div>
+    	<div class="card-body">
+    		<ul class="list-group">
+        		{% for item in list_project %}
+            		<li class="list-group-item">
+                        <a href="{% url 'detailproject' item.id %}" style="color: #17a2b8;">{{ item.title }}</a>
+                        <a href="{% url 'deleteproject' item.id %}"><i class="fa fa-trash" aria-hidden="true" style="float: right;"></i></a>
+                    </li>
+        		{% endfor %}
+    		</ul>
+    	</div>
+    </div>
+{% endblock content %}

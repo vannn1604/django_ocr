@@ -1,0 +1,29 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'user/style.css' %}">
+</head>
+<body>
+	<div class="container" style="margin-top: 15px;">
+	
+		<div class="login-page">
+			<div class="form">
+
+			    <div id="content" class="colM">
+			        <h1>Logged out</h1>
+			        <p>Thanks for spending some quality time with the Web site today.</p>
+			        <p><a href="{% url 'login' %}">Log in again</a></p>
+			        <br class="clear">
+			    </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

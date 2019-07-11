@@ -1,0 +1,37 @@
+{% extends 'user/base.html' %}
+{% block user %}
+	<a href="{% url 'home' %}" style='color:black;'>{{ username }}</a>
+{% endblock user %}
+{% block content %}
+    <div class="card">
+    	<div class="card-header">
+    		<h3><a href="{% url 'detailproject' project.id %}">{{ project.title }}</a> /List Image</h3>
+    	</div>
+    	<div class="card-body">
+    		<ul class="list-group">
+                {% for item in image %}
+                    <li class="list-group-item">
+                        <a href="{% url 'detailimage' project.id item.id %}">
+                            {% if item.auto_OCR %}
+                                <label style="cursor: pointer;" class="text-info">{{ item.title }}<a href="{% url 'deleteimage' project.id item.id %}"><i class="fa fa-trash" aria-hidden="true" style="float: right;"></i></a></label>
+                            {% else %}
+                                <label style="cursor: pointer;" class="text-warning">{{ item.title }} <a href="{% url 'deleteimage' project.id item.id %}"><i class="fa fa-trash" aria-hidden="true" style="float: right;"></i></a></label>
+                            {% endif %}
+                            <hr/>
+                            <img src="{{ item.source.url }}" height="100px" />
+                        </a>
+                    </li>
+                {% endfor %}
+                <br/>
+                <form action="{% url 'uploadingimage' project.id %}" method='post' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="image"><b>Add image:</b></label>
+                        <input type="file" id="image" name="source" class="btn" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </ul>
+    	</div>
+    </div>
+{% endblock  %}

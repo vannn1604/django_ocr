@@ -1,0 +1,21 @@
+{% extends 'user/base.html' %}
+{% block user %}
+    <a href="{% url 'home' %}" style='color:black;'>{{ username }}</a>
+{% endblock user %}
+<{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 style="display: inline;">{{ title }}<a href="{% url 'editproject' project_id %}"><i class="fas fa-wrench" style="float: right;"> Edit</i></a></h2>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li>Created at: {{ created_at }}</li>
+                <li>Last updated at: {{ updated_at }}</li>
+                <li>Description: {{ description }}</li>
+                <br/>
+            </ul>
+            <h4><a href="{% url 'image' project_id %}">List image</a></h4>
+            
+        </div>
+    </div>
+{% endblock content %}

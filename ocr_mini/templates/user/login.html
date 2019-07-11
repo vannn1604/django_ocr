@@ -1,0 +1,31 @@
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'user/style.css' %}">
+</head>
+<body>
+	<div class="container" style="margin-top: 15px;">
+	
+		<div class="login-page">
+			<div class="form">
+		
+				<h1>Login<p class="spinner-border"></p></h1>
+				<form action="" method="post">
+					{% csrf_token %}
+					{{ form|crispy }}
+					<input type="submit" value="Sign In" />
+					<p class="message">Not registered? <a href="{% url 'register' %}">Create an account</a></p>
+				</form>
+			</div>
+		</div>
+    </div>
+</body>
+</html>

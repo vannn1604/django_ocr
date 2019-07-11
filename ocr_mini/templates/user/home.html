@@ -1,0 +1,27 @@
+{% extends 'user/base.html' %}
+{% block user %}
+	{{ username }}
+{% endblock user %}
+{% block content %}
+    <div class="card">
+    	<div class="card-header">
+    		<h3 style="display: inline;">Username: {{ username }}</h3>
+    		<a href="{% url 'changepassword' %}" style="float: right; margin-left: 15px;">Change Password</a>
+    		<a href="{% url 'changeuser' %}" style="float: right;">Edit Your Profile</a>
+    	</div>
+    	<div class="card-body">
+    		<ul>
+		        <li>Email: {{ email }}</li>
+		        <li>Firstname: {{ firstname }}</li>
+		        <li>Lastname: {{ lastname }}</li>
+		    </ul>
+		    <br/>
+
+		    <a href="{% url 'project' %}">Your projects</a>
+    	</div>
+	    
+    </div>
+
+    
+{% endblock  %}
+
