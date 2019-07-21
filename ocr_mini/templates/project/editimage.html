@@ -3,14 +3,20 @@
 	<a href="{% url 'home' %}" style='color:black;'>{{ username }}</a>
 {% endblock user %}
 <{% block content %}
-	
-
-
+	{% for message in messages %}
+		<div class="alert alert-warning">
+			<strong>
+				
+					{{ message }}
+				
+			</strong>
+		</div>
+	{% endfor %}
 	<div class="card">
 		<div class="card-header">
 			<div>
 				<h3>
-					<a href="{% url 'detailproject' project.id %}">{{ project.title }}</a>/
+					<a href="{% url 'detailproject' project.id %}">{{ project.title }}</a> /
 					<a href="{% url 'image' project.id %}">List Image </a>/
 					{% comment %} {{ title }} {% endcomment %}
 				</h3>
@@ -19,16 +25,16 @@
 		<div class="card-body">
 			<ul>
 				<li>
-					<form action="{% url 'updateimage' project.id image_id %}" method="post">
+					<form action="{% url 'editimage' project.id image_id %}" method="post">
 						{% csrf_token %}
+						<a href="{% url 'detailimage' project.id image_id %}" class="btn btn-secondary" style="float: right; margin-left: 5px;">Cancel</a>
 						<button type="submit" class="btn btn-primary" style="float: right;">Save</button>
-						<span>Title: <input type="text" value="{{ title }}" name="title" style="font-size: 1.75rem;" /></span>
-						
+						<span><b>Label:</b> <input type="text" value="{{ title }}" name="title" style="font-size: 1rem; width: 80%; border-radius: 4px; border: 1px solid #ccc;" /></span>
 					</form>
 				</li>
-				<li>auto_OCR: <span class="text-primary">{{ auto_OCR }}</span></li>
-				<li>Created at: {{ created_at }}</li>
-				<li>Updated at: {{ updated_at }}</li>
+				<li><b>auto_OCR:</b> <span class="text-primary">{{ auto_OCR }}</span></li>
+				<li><b>Created at:</b> {{ created_at }}</li>
+				<li><b>Updated at:</b> {{ updated_at }}</li>
 				<li class="list-group-item" style="margin-top: 15px;">
 					<img src="{{ source.url }}" height="100px" />
 				</li>

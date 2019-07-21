@@ -1,11 +1,8 @@
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth import forms
 from django.contrib.auth.models import User
 
-class ChangeUser(UserChangeForm):
+
+class UserChangeForm(forms.UserChangeForm):
     class Meta:
         model = User
-        fields = {
-            'email',
-            'first_name',
-            'last_name',
-        }
+        fields = ("email", "first_name", "last_name")

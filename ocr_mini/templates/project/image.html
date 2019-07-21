@@ -10,12 +10,12 @@
     	<div class="card-body">
     		<ul class="list-group">
                 {% for item in image %}
-                    <li class="list-group-item">
+                    <li class="list-group-item" style="border: 1px solid black;">
                         <a href="{% url 'detailimage' project.id item.id %}">
                             {% if item.auto_OCR %}
-                                <label style="cursor: pointer;" class="text-info">{{ item.title }}<a href="{% url 'deleteimage' project.id item.id %}"><i class="fa fa-trash" aria-hidden="true" style="float: right;"></i></a></label>
+                                <label style="cursor: pointer;" class="text-primary">{{ item.title }}<a href="{% url 'deleteimage' project.id item.id %}"><i class="fa fa-trash" aria-hidden="true" style="float: right;"></i></a></label>
                             {% else %}
-                                <label style="cursor: pointer;" class="text-warning">{{ item.title }} <a href="{% url 'deleteimage' project.id item.id %}"><i class="fa fa-trash" aria-hidden="true" style="float: right;"></i></a></label>
+                                <label style="cursor: pointer;" class="text-success">{{ item.title }} <a href="{% url 'deleteimage' project.id item.id %}"><i class="fa fa-trash" aria-hidden="true" style="float: right;"></i></a></label>
                             {% endif %}
                             <hr/>
                             <img src="{{ item.source.url }}" height="100px" />

@@ -3,8 +3,17 @@
     <a href="{% url 'home' %}" style='color:black;'>{{ username }}</a>
 {% endblock user %}
 <{% block content %}
+	{% for message in messages %}
+		<div class="alert alert-warning">
+			<strong>
+				
+					{{ message }}
+				
+			</strong>
+		</div>
+	{% endfor %}
 	<div class="container">
-		<form action="{% url 'updatingproject' project.id %}" method="post">
+		<form action="{% url 'editproject' project.id %}" method="post">
             {% csrf_token %}
 			<div class="form-group">
 				<label for="name">Project's name: </label>
