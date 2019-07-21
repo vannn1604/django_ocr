@@ -3,6 +3,11 @@
 	{{ username }}
 {% endblock user %}
 {% block content %}
+	{% for message in messages %}
+		<div class="alert alert-success">
+			<strong>{{ message }}</strong>
+		</div>
+	{% endfor %}
     <div class="card">
     	<div class="card-header">
     		<h3 style="display: inline;">Username: {{ username }}</h3>

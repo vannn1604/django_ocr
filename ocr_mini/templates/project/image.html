@@ -23,11 +23,20 @@
                     </li>
                 {% endfor %}
                 <br/>
+                {% for message in messages %}
+                	<div class="alert alert-warning">
+                		<strong>
+                			{{ message }}
+                		</strong>
+                	</div>
+                    
+                {% endfor %}
+                
                 <form action="{% url 'uploadingimage' project.id %}" method='post' enctype='multipart/form-data'>
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="image"><b>Add image:</b></label>
-                        <input type="file" id="image" name="source" class="btn" />
+                        <input type="file" id="image" name="source" class="btn" multiple />
                     </div>
                     <button type="submit" class="btn btn-primary">Upload</button>
                 </form>

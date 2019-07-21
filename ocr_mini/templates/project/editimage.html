@@ -12,7 +12,7 @@
 				<h3>
 					<a href="{% url 'detailproject' project.id %}">{{ project.title }}</a>/
 					<a href="{% url 'image' project.id %}">List Image </a>/
-					{{ title }}
+					{% comment %} {{ title }} {% endcomment %}
 				</h3>
 			</div>
 		</div>
@@ -20,10 +20,11 @@
 			<ul>
 				<li>
 					<form action="{% url 'updateimage' project.id image_id %}" method="post">
-                    {% csrf_token %}
-					Title: <input type="text" value="{{ title }}" name="title" style="font-size: 1.75rem;" />
-					<button type="submit" class="btn btn-primary" style="float: right;">Save</button>
-				</form>
+						{% csrf_token %}
+						<button type="submit" class="btn btn-primary" style="float: right;">Save</button>
+						<span>Title: <input type="text" value="{{ title }}" name="title" style="font-size: 1.75rem;" /></span>
+						
+					</form>
 				</li>
 				<li>auto_OCR: <span class="text-primary">{{ auto_OCR }}</span></li>
 				<li>Created at: {{ created_at }}</li>
