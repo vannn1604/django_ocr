@@ -3,6 +3,7 @@ import datetime
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.views import View
 
 from utils.ocr_utils import ocr
 
@@ -18,9 +19,22 @@ def image_delete(request, project_id, image_id):
     return redirect("image", project_id)
 
 
-def image_edit(request, project_id, image_id):
-    if request.method == "POST":
-        
+class ImageUpdateView(View):
+    def get(self, request, project_id, image_id):
+        img = Image.objects.get(pk=image_id)
+        image = {
+            "title": img.title,
+            "created_at": img.created_at,
+            "updated_at": img.updated_at,
+            "auto_OCR": img.auto_OCR,
+            "source": img.source,
+            "project": Project.objects.get(pk=project_id),
+            "image_id": image_id,
+            "username": request.user.username,
+        }
+        return render(request, "project/editimage.html", image)
+
+    def post(self, request, project_id, image_id):
         img = Image.objects.get(pk=image_id)
         if request.POST["title"]:
             if request.POST["title"] != img.title:
@@ -36,18 +50,38 @@ def image_edit(request, project_id, image_id):
         else:
             messages.warning(request, "The label has not None.")
         return redirect("editimage", project_id, image_id)
-    img = Image.objects.get(pk=image_id)
-    image = {
-        "title": img.title,
-        "created_at": img.created_at,
-        "updated_at": img.updated_at,
-        "auto_OCR": img.auto_OCR,
-        "source": img.source,
-        "project": Project.objects.get(pk=project_id),
-        "image_id": image_id,
-        "username": request.user.username,
-    }
-    return render(request, "project/editimage.html", image)
+
+
+# def image_edit(request, project_id, image_id):
+#     if request.method == "POST":
+
+#         img = Image.objects.get(pk=image_id)
+#         if request.POST["title"]:
+#             if request.POST["title"] != img.title:
+#                 img.title = request.POST["title"]
+#                 img.auto_OCR = False
+#                 img.save()
+#                 project = Project.objects.get(pk=project_id)
+#                 project.updated_at = datetime.datetime.now()
+#                 project.save()
+#                 return redirect("detailimage", project_id=project_id, image_id=image_id)
+#             else:
+#                 messages.warning(request, "The label has not changed.")
+#         else:
+#             messages.warning(request, "The label has not None.")
+#         return redirect("editimage", project_id, image_id)
+#     img = Image.objects.get(pk=image_id)
+#     image = {
+#         "title": img.title,
+#         "created_at": img.created_at,
+#         "updated_at": img.updated_at,
+#         "auto_OCR": img.auto_OCR,
+#         "source": img.source,
+#         "project": Project.objects.get(pk=project_id),
+#         "image_id": image_id,
+#         "username": request.user.username,
+#     }
+#     return render(request, "project/editimage.html", image)
 
 
 def image_detail(request, project_id, image_id):
@@ -99,8 +133,16 @@ def image_uploading(request, project_id):
     return redirect("image", project_id=project_id)
 
 
-def project_create(request):
-    if request.method == "POST":
+class ProjectCreateView(View):
+    def get(self, request):
+        form = ProjectForm()
+        return render(
+            request,
+            "project/createproject.html",
+            {"username": request.user.username, "form": form},
+        )
+
+    def post(self, request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             if Project.objects.filter(title=request.POST["title"]):
@@ -110,17 +152,31 @@ def project_create(request):
             profile.user = request.user
             profile.save()
             project_id = Project.objects.filter(user_id=request.user.id).last().id
-            return redirect("detailproject", project_id=project_id)
-    form = ProjectForm(request.POST)
-    return render(
-        request,
-        "project/createproject.html",
-        {"username": request.user.username, "form": form},
-    )
+        return redirect("detailproject", project_id=project_id)
 
 
-def project(request):
-    if request.session.has_key("username"):
+# def project_create(request):
+#     if request.method == "POST":
+#         form = ProjectForm(request.POST)
+#         if form.is_valid():
+#             if Project.objects.filter(title=request.POST["title"]):
+#                 messages.warning(request, "Project Name Exists")
+#                 return redirect("createproject")
+#             profile = form.save(commit=False)
+#             profile.user = request.user
+#             profile.save()
+#             project_id = Project.objects.filter(user_id=request.user.id).last().id
+#             return redirect("detailproject", project_id=project_id)
+#     form = ProjectForm(request.POST)
+#     return render(
+#         request,
+#         "project/createproject.html",
+#         {"username": request.user.username, "form": form},
+#     )
+
+
+class ProjectView(View):
+    def get(self, request):
         list_project = Project.objects.filter(user_id=request.user.id).order_by(
             "-created_at"
         )
@@ -129,7 +185,19 @@ def project(request):
             "project/project.html",
             {"list_project": list_project, "username": request.user.username},
         )
-    return redirect("login")
+
+
+# def project(request):
+#     if request.session.has_key("username"):
+#         list_project = Project.objects.filter(user_id=request.user.id).order_by(
+#             "-created_at"
+#         )
+#         return render(
+#             request,
+#             "project/project.html",
+#             {"list_project": list_project, "username": request.user.username},
+#         )
+#     return redirect("login")
 
 
 def project_detail(request, project_id):

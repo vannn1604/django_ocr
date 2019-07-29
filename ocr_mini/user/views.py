@@ -22,7 +22,7 @@ def user_change(request):
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, "Saved Profile Successfully!")
+            messages.success(request, "Updated Profile Successfully!")
             return redirect("home")
     form = UserChangeForm()
     return render(request, "user/user-change.html", {"form": form})

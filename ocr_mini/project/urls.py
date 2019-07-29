@@ -3,9 +3,11 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path("", views.project, name="project"),
+    # path("", views.project, name="project"),
+    path("", views.ProjectView.as_view(), name="project"),
     path("<int:project_id>/", views.project_detail, name="detailproject"),
-    path("createproject/", views.project_create, name="createproject"),
+    # path("createproject/", views.project_create, name="createproject"),
+    path("createproject/", views.ProjectCreateView.as_view(), name="createproject"),
     # path('creatingproject/', views.creatingproject, name='creatingproject'),
     path("<int:project_id>/editproject/", views.project_edit, name="editproject"),
     # path(
@@ -22,7 +24,9 @@ urlpatterns = [
         "<int:project_id>/image/<int:image_id>/", views.image_detail, name="detailimage"
     ),
     path(
-        "<int:project_id>/editimage/<int:image_id>/", views.image_edit, name="editimage"
+        "<int:project_id>/editimage/<int:image_id>/",
+        views.ImageUpdateView.as_view(),
+        name="editimage",
     ),
     # path(
     #     "<int:project_id>/updateimage/<int:image_id>/",
